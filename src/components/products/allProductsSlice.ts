@@ -7,8 +7,6 @@ export const loadProducts = createAsyncThunk(
   "allProducts/getAllProducts",
   async () => {
     const data = await client.fetch(`*[_type =="product"]`);
-    // const json = await data.json();
-    // console.log(data)
     return data;
   }
 );
@@ -42,15 +40,6 @@ const sliceOptions = {
 export const allProductsSlice = createSlice(sliceOptions);
 
 export const selectAllProducts = (state: any) => state.allProducts.products;
-
-// export const selectFilteredAllProducts = (state: any) => {
-//   const allProducts = selectAllProducts(state);
-//   const searchTerm = selectSearchTerm(state);
-
-//   return allProducts.filter((product: any) =>
-//     product.name.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-// };
 
 export const selectFilteredAllProducts = createSelector(
   [selectAllProducts, selectSearchTerm],
