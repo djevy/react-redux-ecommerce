@@ -11,6 +11,7 @@ import ProductPage from "./pages/ProductPage";
 
 import NotFound from "./pages/NotFound";
 import Footer from "./components/footer/Footer";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,14 +19,17 @@ function App() {
     dispatch(loadProducts() as any);
   }, [dispatch]);
   return (
-    <div id="pageContents" className="App">
-      <Routes>
-        <Route path="/" element={<Home />} />
+    <div className="App">
+      <Navbar />
+      <div id="pageContents">
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
       <Footer />
     </div>
   );
