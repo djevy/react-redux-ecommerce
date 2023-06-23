@@ -1,0 +1,103 @@
+/* Product Page */
+.product-layout {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+    justify-items: center;
+    margin: 10px auto;
+  }
+  .product-details {
+    display: flex;
+    flex-direction: column;
+  }
+  .product-size{
+    width: 80%;
+    margin: auto;
+  }
+  .product-size button {
+    margin: 5px;
+  }
+  .quantity-details {
+    display: flex;
+    justify-content: center;
+    border: solid #878787 0.5px;
+    width: min-content;
+    margin: auto;
+  }
+  .quantity-details span {
+    padding: 3px 5px;
+  }
+  .quantity-details span:nth-child(1) {
+    cursor: pointer;
+    border-right: dashed #878787 0.5px;
+  }
+  .quantity-details span:nth-child(2) {
+    padding: 3px 10px;
+  }
+  .quantity-details span:nth-child(3) {
+    cursor: pointer;
+    border-left: dashed #878787 0.5px;
+  }
+  
+  .product-detail-desc .buttons {
+    display: flex;
+    gap: 30px;
+  }
+  .buttons .add-to-cart {
+    padding: 10px 20px;
+    border: 1px solid #d32542;
+    margin: auto;
+    margin-top: 20px;
+    
+    font-size: 18px;
+    font-weight: 500;
+    background-color: #d32542;
+    color: white;
+    cursor: pointer;
+    width: 200px;
+    transform: scale(1, 1);
+    transition: transform 0.5s ease;
+  }
+  .buttons .add-to-cart:hover {
+    transform: scale(1.1, 1.1);
+  }
+  
+  .other-products-wrapper {
+    margin-top: 25px;
+  }
+  .other-products-wrapper h2 {
+    text-align: center;
+    margin: 25px;
+    color: #d32542;
+  
+    font-size: 28px;
+  }
+  .other-products-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .other-products-container a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ---- Tablets ----*/
+@media only screen and (max-width: 768px) {
+}
+/* ---- Mobile ----*/
+@media only screen and (max-width: 425px) {
+  .product-layout {
+    display: flex;
+    align-items: center;
+    margin: 10px auto;
+    flex-direction: column;
+  }
+  #display-image {
+  width: 80%;
+  border-radius: 10px !important;
+}
+}

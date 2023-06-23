@@ -1,4 +1,5 @@
 import React from "react";
+import "./navbar.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,7 +12,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import { Link } from "react-router-dom";
 import Search from "../search/Search";
 
@@ -63,69 +63,11 @@ const Navbar = () => {
   );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show number of favorite items"
-          color="inherit"
-        >
-          <Badge badgeContent={2} color="error">
-            <FavoriteIcon />
-          </Badge>
-        </IconButton>
-        <p>Favourites</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show number of items in the cart"
-          color="inherit"
-        >
-          <Badge badgeContent={1} color="error">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>Cart</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-  //   return (
-  //     <div>
-  //
-  //     </div>
-  //   );
   return (
     <Box sx={{ flexGrow: 1 }}>
+      {/* #193048 */}
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ display: { xs: "none", sm: "flex" }, background: "#193048" }}>
           <IconButton
             size="large"
             edge="start"
@@ -138,14 +80,13 @@ const Navbar = () => {
           <Typography
             variant="h5"
             component="h1"
-            noWrap
             sx={{ display: { sm: "block" } }}
           >
             <Link to={"/"}>Menswear</Link>
           </Typography>
           <Search />
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: { xs: "none", sm: "flex" } }}>
             <IconButton
               size="large"
               aria-label="show number of favorite items "
@@ -177,21 +118,65 @@ const Navbar = () => {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+        </Toolbar>
+
+        {/* Mobile Nav */}
+        <Toolbar sx={{ display: { xs: "flex", sm: "none" }, flexWrap: "wrap", background: "#193048" }}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{ display: { sm: "block" } }}
+          >
+            <Link to={"/"}>Menswear</Link>
+          </Typography>
+
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { md: "flex" }, margin: "auto" }}>
             <IconButton
               size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+              aria-label="show number of favorite items "
               color="inherit"
             >
-              <MoreIcon />
+              <Badge badgeContent={2} color="error">
+                <FavoriteIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show number of items in the cart"
+              color="inherit"
+            >
+              <Badge badgeContent={1} color="error">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
             </IconButton>
           </Box>
+          <div id="mobile-search">
+            <Search />
+          </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
       {renderMenu}
     </Box>
   );

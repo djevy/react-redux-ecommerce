@@ -6,8 +6,8 @@ import { Route, Routes } from "react-router-dom";
 import { loadProducts } from "./components/products/allProductsSlice";
 import { AppDispatch } from "./store";
 
-import Home from "./pages/Home";
-import ProductPage from "./pages/ProductPage";
+import Home from "./pages/Home/Home";
+import ProductPage from "./pages/productPage/ProductPage";
 
 import NotFound from "./pages/NotFound";
 import Footer from "./components/footer/Footer";

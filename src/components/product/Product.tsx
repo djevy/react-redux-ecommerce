@@ -4,7 +4,12 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import { CardActionArea, CardActions } from "@mui/material";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+// import FavoriteIcon from '@mui/icons-material/Favorite';
+import Tooltip from "@mui/material/Tooltip";
 
 import "./product.css";
 
@@ -31,23 +36,18 @@ function Product({ product: { image, name, slug, price } }: any) {
         </Link>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Add to basket
-        </Button>
+        <Tooltip title="Add to favorites">
+          <IconButton aria-label="add to favorites">
+            <FavoriteBorderIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Add to favorites">
+          <IconButton size="small" color="error" aria-label="add to cart">
+            <AddShoppingCartIcon />
+          </IconButton>
+        </Tooltip>
       </CardActions>
     </Card>
-    // <Link to={`/product/${slug.current}`}>
-    //   {image.length > 0 &&
-    //     <img
-    //       src={urlFor(image && image[0])?.url()}
-    //       alt={name}
-    //       className="product-image"
-    //       loading="lazy"
-    //     />
-    //   }
-    //   <p>{name}</p>
-    //   <p>£{price.toFixed(2)}</p>
-    // </Link>
   );
 }
 

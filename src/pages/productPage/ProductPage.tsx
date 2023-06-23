@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { urlFor } from "../client";
+import { urlFor } from "../../client";
+import "./productPage.css"
 
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
+import Button from "@mui/material/Button";
 
-import { selectFilteredAllProducts } from "../components/products/allProductsSlice";
-import { loadSingleProduct } from "../components/product/singleProductSlice";
-import { AppDispatch } from "../store";
-import Product from "../components/product/Product";
+import { selectFilteredAllProducts } from "../../components/products/allProductsSlice";
+import { loadSingleProduct } from "../../components/product/singleProductSlice";
+import { AppDispatch } from "../../store";
+import Product from "../../components/product/Product";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -29,16 +29,22 @@ const ProductPage = () => {
   const { hasError } = useSelector((state: any) => state.allProducts);
 
   const productData = useSelector((state: any) => state.singleProduct).product;
+
   const allProducts = useSelector(selectFilteredAllProducts);
-  console.log(allProducts);
-  console.log(productData);
+  const filteredProducts = allProducts.filter((product: any) => {
+    return product.slug.current !== id
+  })
+  // console.log("filtered", filteredProducts);
+  // console.log(allProducts);
+  // console.log(productData);
   const [index, setIndex] = useState(0);
+  const [sizeIndex, setSizeIndex] = useState(0);
 
   return (
     <div className="generalPageLayout">
       {productData ? (
         <div>
-          <h1>{productData.name}</h1>
+          <h3>{productData.name}</h3>
           <div className="product-layout">
             {productData && productData.image ? (
               <img
@@ -54,6 +60,22 @@ const ProductPage = () => {
             ) : (
               <CircularProgress color="inherit" />
             )}
+            <div className="small-images-container alternate-images mobile">
+              {productData.image &&
+                productData.image.map((item: any, i: any) => (
+                  <img
+                    src={item && urlFor(item)}
+                    alt={productData.slug}
+                    key={i}
+                    className={
+                      i === index
+                        ? "product-image selected-product"
+                        : "product-image"
+                    }
+                    onMouseEnter={() => setIndex(i)}
+                  />
+                ))}
+            </div>
             <div className="product-details">
               {/* <div className="product-reviews">
                 <StarIcon />
@@ -66,6 +88,21 @@ const ProductPage = () => {
               <h4>Details:</h4>
               <p>{productData.details}</p>
               {productData.price && <p>£{productData.price.toFixed(2)}</p>}
+              {productData.sizes && (
+                <div className="product-size">
+                  <h3>Size:</h3>
+                  {productData.sizes.map((size: number, i: number) => (
+                    <Button
+                      key={size}
+                      variant={i === sizeIndex ? "contained" : "outlined"}
+                      color="error"
+                      onClick={() => setSizeIndex(i)}
+                    >
+                      {size}
+                    </Button>
+                  ))}
+                </div>
+              )}
               <div className="quantity">
                 <h3>Quantity:</h3>
                 <p className="quantity-details">
@@ -76,6 +113,8 @@ const ProductPage = () => {
                     <RemoveIcon />
                   </span>
                   {/* <span className="number-quantity">{productQuantity}</span> */}
+                  <span className="number-quantity">{0}</span>
+
                   <span
                     className="plus-quantity"
                     // onClick={increaseProductQuantity}
@@ -94,7 +133,7 @@ const ProductPage = () => {
                 </button>
               </div>
             </div>
-            <div className="small-images-container alternate-images">
+            <div className="small-images-container alternate-images none-mobile">
               {productData.image &&
                 productData.image.map((item: any, i: any) => (
                   <img
@@ -116,8 +155,8 @@ const ProductPage = () => {
             <h2>You may also like</h2>
             <div>
               <div className="other-products-container">
-                {allProducts ? (
-                  allProducts.map((product: any) => (
+                {filteredProducts ? (
+                  filteredProducts.map((product: any) => (
                     <Product key={product._id} product={product} />
                   ))
                 ) : (
@@ -125,22 +164,6 @@ const ProductPage = () => {
                 )}
               </div>
             </div>
-            <ImageList
-              sx={{ width: 500, height: 450 }}
-              variant="quilted"
-              cols={4}
-              rowHeight={121}
-            >
-              {allProducts.map((product: any) => (
-                <ImageListItem key={product.image}>
-                  <img
-                    src={`${product.image}?w=164&h=164&fit=crop&auto=format`}
-                    alt={product.title}
-                    loading="lazy"
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
           </div>
         </div>
       ) : (
