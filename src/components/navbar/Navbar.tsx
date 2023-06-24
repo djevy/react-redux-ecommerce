@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./navbar.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -17,30 +18,18 @@ import Search from "../search/Search";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = "primary-search-account-menu";
+  const menuId = "account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -62,18 +51,42 @@ const Navbar = () => {
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
+  type Draw = "menu" | "cart" | "favorite";
+
+  const [drawState, setDrawState] = useState({
+    menu: false,
+    favorite: false,
+    cart: false,
+  });
+
+  const toggleDrawer =
+    (draw: Draw, open: boolean) =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+
+      console.log("toggled");
+      setDrawState({ ...drawState, [draw]: open });
+    };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* #193048 */}
       <AppBar position="static">
-        <Toolbar sx={{ display: { xs: "none", sm: "flex" }, background: "#193048" }}>
+        <Toolbar
+          sx={{ display: { xs: "none", sm: "flex" }, background: "#193048" }}
+        >
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={toggleDrawer("menu", true)}
           >
             <MenuIcon />
           </IconButton>
@@ -91,6 +104,7 @@ const Navbar = () => {
               size="large"
               aria-label="show number of favorite items "
               color="inherit"
+              onClick={toggleDrawer("favorite", true)}
             >
               <Badge badgeContent={2} color="error">
                 <FavoriteIcon />
@@ -100,6 +114,7 @@ const Navbar = () => {
               size="large"
               aria-label="show number of items in the cart"
               color="inherit"
+              onClick={toggleDrawer("cart", true)}
             >
               <Badge badgeContent={1} color="error">
                 <ShoppingCartIcon />
@@ -121,13 +136,20 @@ const Navbar = () => {
         </Toolbar>
 
         {/* Mobile Nav */}
-        <Toolbar sx={{ display: { xs: "flex", sm: "none" }, flexWrap: "wrap", background: "#193048" }}>
+        <Toolbar
+          sx={{
+            display: { xs: "flex", sm: "none" },
+            flexWrap: "wrap",
+            background: "#193048",
+          }}
+        >
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={toggleDrawer("menu", true)}
           >
             <MenuIcon />
           </IconButton>
@@ -145,6 +167,7 @@ const Navbar = () => {
               size="large"
               aria-label="show number of favorite items "
               color="inherit"
+              onClick={toggleDrawer("favorite", true)}
             >
               <Badge badgeContent={2} color="error">
                 <FavoriteIcon />
@@ -154,6 +177,7 @@ const Navbar = () => {
               size="large"
               aria-label="show number of items in the cart"
               color="inherit"
+              onClick={toggleDrawer("cart", true)}
             >
               <Badge badgeContent={1} color="error">
                 <ShoppingCartIcon />
@@ -178,6 +202,49 @@ const Navbar = () => {
         </Toolbar>
       </AppBar>
       {renderMenu}
+      <Drawer
+        anchor={"left"}
+        open={drawState["menu"]}
+        onClose={toggleDrawer("menu", false)}
+      >
+        <Box
+          sx={{ width: 250 }}
+          role="presentation"
+          onClick={toggleDrawer("menu", false)}
+          onKeyDown={toggleDrawer("menu", false)}
+        >
+          <p>Menu Component</p>
+        </Box>
+      </Drawer>
+
+      <Drawer
+        anchor={"right"}
+        open={drawState["favorite"]}
+        onClose={toggleDrawer("favorite", false)}
+      >
+        <Box
+          sx={{ width: 250 }}
+          role="presentation"
+          onClick={toggleDrawer("favorite", false)}
+          onKeyDown={toggleDrawer("favorite", false)}
+        >
+          <p>Favorite Items Component</p>
+        </Box>
+      </Drawer>
+      <Drawer
+        anchor={"right"}
+        open={drawState["cart"]}
+        onClose={toggleDrawer("cart", false)}
+      >
+        <Box
+          sx={{ width: 250 }}
+          role="presentation"
+          onClick={toggleDrawer("cart", false)}
+          onKeyDown={toggleDrawer("cart", false)}
+        >
+          <p>Cart Component</p>
+        </Box>
+      </Drawer>
     </Box>
   );
 };

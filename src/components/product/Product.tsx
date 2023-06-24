@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { urlFor } from "../../client";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
@@ -8,13 +9,14 @@ import { CardActionArea, CardActions } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-// import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from "@mui/material/Tooltip";
 
 import "./product.css";
 import { ProductType } from "../products/allProductsSlice";
 
 function Product({ image, name, slug, price, _id }: ProductType) {
+  const [favorite, setFavorite] = useState(false);
   // console.log(product);
   return (
     <Card className="product-card" sx={{ maxWidth: 345, minWidth: 300 }}>
@@ -26,7 +28,7 @@ function Product({ image, name, slug, price, _id }: ProductType) {
             image={urlFor(image && image[0])?.url()}
             alt={name}
           />
-          <CardContent>
+          <CardContent className="card-content">
             <Typography gutterBottom variant="h5" component="div">
               {name}
             </Typography>
@@ -37,12 +39,18 @@ function Product({ image, name, slug, price, _id }: ProductType) {
         </Link>
       </CardActionArea>
       <CardActions>
-        <Tooltip title="Add to favorites">
-          <IconButton aria-label="add to favorites">
-            <FavoriteBorderIcon />
+      {favorite ? <Tooltip title="Remove from favorites">
+          <IconButton aria-label="add to favorites" color="error">
+            <FavoriteIcon />
           </IconButton>
         </Tooltip>
+        :
         <Tooltip title="Add to favorites">
+          <IconButton aria-label="add to favorites" >
+            <FavoriteBorderIcon />
+          </IconButton>
+        </Tooltip>}
+        <Tooltip title="Add to cart">
           <IconButton size="small" color="error" aria-label="add to cart">
             <AddShoppingCartIcon />
           </IconButton>
