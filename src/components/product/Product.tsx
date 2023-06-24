@@ -5,15 +5,16 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, CardActions } from "@mui/material";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import IconButton from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from "@mui/material/Tooltip";
 
 import "./product.css";
+import { ProductType } from "../products/allProductsSlice";
 
-function Product({ product: { image, name, slug, price } }: any) {
+function Product({ image, name, slug, price, _id }: ProductType) {
   // console.log(product);
   return (
     <Card className="product-card" sx={{ maxWidth: 345, minWidth: 300 }}>
@@ -29,7 +30,7 @@ function Product({ product: { image, name, slug, price } }: any) {
             <Typography gutterBottom variant="h5" component="div">
               {name}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography className="product-price">
               £{price.toFixed(2)}
             </Typography>
           </CardContent>

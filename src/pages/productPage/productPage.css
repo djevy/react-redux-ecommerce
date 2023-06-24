@@ -10,6 +10,11 @@
     display: flex;
     flex-direction: column;
   }
+  .product-price {
+    font-size: 2em;
+    font-weight: bold !important;
+    color: #d32f2f;
+  }
   .product-size{
     width: 80%;
     margin: auto;
@@ -45,14 +50,10 @@
   }
   .buttons .add-to-cart {
     padding: 10px 20px;
-    border: 1px solid #d32542;
     margin: auto;
     margin-top: 20px;
-    
     font-size: 18px;
     font-weight: 500;
-    background-color: #d32542;
-    color: white;
     cursor: pointer;
     width: 200px;
     transform: scale(1, 1);

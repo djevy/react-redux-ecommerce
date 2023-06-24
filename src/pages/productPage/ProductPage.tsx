@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { urlFor } from "../../client";
-import "./productPage.css"
+import "./productPage.css";
 
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
@@ -10,10 +10,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 
-import { selectFilteredAllProducts } from "../../components/products/allProductsSlice";
+import {
+  ProductType,
+  selectFilteredAllProducts,
+} from "../../components/products/allProductsSlice";
 import { loadSingleProduct } from "../../components/product/singleProductSlice";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import Product from "../../components/product/Product";
+import { ImageUrlBuilder } from "@sanity/image-url/lib/types/builder";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -26,14 +30,14 @@ const ProductPage = () => {
     }
   }, [dispatch, id]);
 
-  const { hasError } = useSelector((state: any) => state.allProducts);
+  const { hasError } = useSelector((state: RootState) => state.allProducts);
 
   const productData = useSelector((state: any) => state.singleProduct).product;
 
   const allProducts = useSelector(selectFilteredAllProducts);
-  const filteredProducts = allProducts.filter((product: any) => {
-    return product.slug.current !== id
-  })
+  const filteredProducts = allProducts.filter((product: ProductType) => {
+    return product.slug.current !== id;
+  });
   // console.log("filtered", filteredProducts);
   // console.log(allProducts);
   // console.log(productData);
@@ -62,9 +66,9 @@ const ProductPage = () => {
             )}
             <div className="small-images-container alternate-images mobile">
               {productData.image &&
-                productData.image.map((item: any, i: any) => (
+                productData.image.map((item: ImageUrlBuilder, i: number) => (
                   <img
-                    src={item && urlFor(item)}
+                    src={item && urlFor(item)?.url()}
                     alt={productData.slug}
                     key={i}
                     className={
@@ -85,12 +89,14 @@ const ProductPage = () => {
                 <StarOutlineIcon />
               </div> */}
               {/* <p>(20)</p> */}
-              <h4>Details:</h4>
+              <h3>Details:</h3>
               <p>{productData.details}</p>
-              {productData.price && <p>£{productData.price.toFixed(2)}</p>}
+              {productData.price && (
+                <p className="product-price">£{productData.price.toFixed(2)}</p>
+              )}
               {productData.sizes && (
                 <div className="product-size">
-                  <h3>Size:</h3>
+                  <h4>Size:</h4>
                   {productData.sizes.map((size: number, i: number) => (
                     <Button
                       key={size}
@@ -124,20 +130,21 @@ const ProductPage = () => {
                 </p>
               </div>
               <div className="buttons">
-                <button
-                  type="button"
+                <Button
+                  variant="contained"
+                  color="error"
                   className="add-to-cart"
                   //   onClick={() => addToCart(productData, productQuantity)}
                 >
                   Add to Cart
-                </button>
+                </Button>
               </div>
             </div>
             <div className="small-images-container alternate-images none-mobile">
               {productData.image &&
-                productData.image.map((item: any, i: any) => (
+                productData.image.map((item: ImageUrlBuilder, i: number) => (
                   <img
-                    src={item && urlFor(item)}
+                    src={item && urlFor(item)?.url()}
                     alt={productData.slug}
                     key={i}
                     className={
@@ -156,8 +163,16 @@ const ProductPage = () => {
             <div>
               <div className="other-products-container">
                 {filteredProducts ? (
-                  filteredProducts.map((product: any) => (
-                    <Product key={product._id} product={product} />
+                  filteredProducts.map((product: ProductType) => (
+                    <Product
+                      key={product._id}
+                      image={product.image}
+                      name={product.name}
+                      _id={product._id}
+                      slug={product.slug}
+                      details={product.details}
+                      price={product.price}
+                    />
                   ))
                 ) : (
                   <CircularProgress color="inherit" />

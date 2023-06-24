@@ -1,14 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectFilteredAllProducts } from "./allProductsSlice";
+import { ProductType, selectFilteredAllProducts } from "./allProductsSlice";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Product from "../product/Product";
 import "./products.css";
+import { RootState } from "../../store";
 
 const Products = () => {
   // const dispatch = useDispatch();
-  const { isLoading } = useSelector((state: any) => state.allProducts);
+  const { isLoading } = useSelector((state: RootState) => state.allProducts);
   const allProducts = useSelector(selectFilteredAllProducts);
   console.log(allProducts);
 
@@ -22,8 +23,16 @@ const Products = () => {
       </Backdrop>
       <h2>Products</h2>
       <div className="products-layout">
-        {allProducts.map((product: any) => (
-          <Product product={product} key={product._id} />
+        {allProducts.map((product: ProductType) => (
+          <Product
+            key={product._id}
+            image={product.image}
+            name={product.name}
+            _id={product._id}
+            slug={product.slug}
+            details={product.details}
+            price={product.price}
+          />
         ))}
       </div>
     </div>

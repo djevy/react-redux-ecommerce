@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearSearchTerm,
@@ -64,7 +64,7 @@ const Search = () => {
   const dispatch = useDispatch();
   const searchTerm = useSelector(selectSearchTerm);
 
-  const onSearchChangeHandler = (e: any) => {
+  const onSearchChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchTerm(e.target.value));
   };
 
@@ -72,23 +72,6 @@ const Search = () => {
     dispatch(clearSearchTerm());
   };
   return (
-    // <div id="search-container">
-    //   <SearchIcon />
-    //   <input
-    //     id="search"
-    //     type="text"
-    //     value={searchTerm}
-    //     onChange={onSearchChangeHandler}
-    //     placeholder="Search products"
-    //   />
-      // {searchTerm.length > 0 && (
-      //   <CloseIcon
-      //     onClick={onSearchTermClearHandler}
-      //     id="search-clear-button"
-      //   />
-      // )}
-    // </div>
-
     <SearchBar>
       <SearchIconWrapper>
         <SearchIcon />

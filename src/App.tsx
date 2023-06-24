@@ -16,7 +16,7 @@ import Navbar from "./components/navbar/Navbar";
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(loadProducts() as any);
+    dispatch(loadProducts());
   }, [dispatch]);
   return (
     <div className="App">

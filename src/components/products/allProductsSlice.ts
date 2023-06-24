@@ -1,7 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createSelector } from 'reselect'
+import { createSelector } from "reselect";
 import { client } from "../../client";
 import { selectSearchTerm } from "../search/searchSlice";
+
+export interface ProductType {
+  _id: string;
+  name: string;
+  slug: {
+    current: string;
+  };
+  image: string[];
+  details: string;
+  price: number;
+  sizes?: number[];
+}
 
 export const loadProducts = createAsyncThunk(
   "allProducts/getAllProducts",
@@ -11,44 +23,52 @@ export const loadProducts = createAsyncThunk(
   }
 );
 
-const sliceOptions = {
+interface AllProductsState {
+  products: ProductType[];
+  isLoading: boolean;
+  hasError: boolean;
+}
+
+const initialState: AllProductsState = {
+  products: [],
+  isLoading: false,
+  hasError: false,
+};
+
+const allProductsSlice = createSlice({
   name: "allProducts",
-  initialState: {
-    products: [],
-    isLoading: false,
-    hasError: false,
-  },
+  initialState: initialState,
   reducers: {},
-  extraReducers: (builder: any) => {
+  extraReducers: (builder) => {
     builder
-      .addCase(loadProducts.pending, (state: any) => {
+      .addCase(loadProducts.pending, (state) => {
         state.isLoading = true;
         state.hasError = false;
       })
-      .addCase(loadProducts.fulfilled, (state: any, action: any) => {
+      .addCase(loadProducts.fulfilled, (state, action) => {
         state.products = action.payload;
         state.isLoading = false;
         state.hasError = false;
       })
-      .addCase(loadProducts.rejected, (state: any) => {
+      .addCase(loadProducts.rejected, (state) => {
         state.isLoading = false;
         state.hasError = true;
       });
   },
-};
+});
 
-export const allProductsSlice = createSlice(sliceOptions);
+export const { reducer: allProductsReducer } = allProductsSlice;
 
-export const selectAllProducts = (state: any) => state.allProducts.products;
+export const selectAllProducts = (state: { allProducts: AllProductsState }) =>
+  state.allProducts.products;
 
 export const selectFilteredAllProducts = createSelector(
   [selectAllProducts, selectSearchTerm],
   (allProducts, searchTerm) => {
-    return allProducts.filter((product: any) =>
+    return allProducts.filter((product: ProductType) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
 );
 
-
-export default allProductsSlice.reducer;
+export default allProductsReducer;
