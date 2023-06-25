@@ -9,6 +9,8 @@ import AddIcon from "@mui/icons-material/Add";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import {
   ProductType,
@@ -18,11 +20,23 @@ import { loadSingleProduct } from "../../components/product/singleProductSlice";
 import { AppDispatch, RootState } from "../../store";
 import Product from "../../components/product/Product";
 import { ImageUrlBuilder } from "@sanity/image-url/lib/types/builder";
+import {
+  addFavoriteProduct,
+  removeFavoriteProduct,
+  selectFavoriteProducts,
+} from "../../components/favorites/favoriteProductsSlice";
+import { IconButton, Tooltip } from "@mui/material";
 
 const ProductPage = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch<AppDispatch>();
+  const onAddFavoriteProductHandler = (product: ProductType) => {
+    dispatch(addFavoriteProduct(product));
+  };
+  const onRemoveFavoriteProductHandler = (product: ProductType) => {
+    dispatch(removeFavoriteProduct(product));
+  };
 
   useEffect(() => {
     if (id) {
@@ -43,12 +57,38 @@ const ProductPage = () => {
   // console.log(productData);
   const [index, setIndex] = useState(0);
   const [sizeIndex, setSizeIndex] = useState(0);
+  const favoriteProducts = useSelector(selectFavoriteProducts);
 
   return (
     <div className="product-page">
       {productData ? (
         <div>
-          <h3 className="product-page-name">{productData.name}</h3>
+          <div className="product-page-name-section">
+            <h3 className="product-page-name">{productData.name}</h3>
+            {favoriteProducts.find(
+              (favoriteProduct) => favoriteProduct._id === productData._id
+            ) ? (
+              <Tooltip title="Remove from favorites" className="product-page-favorite">
+                <IconButton
+                  aria-label="add to favorites"
+                  color="error"
+                  onClick={() => onRemoveFavoriteProductHandler(productData)}
+                >
+                  <FavoriteIcon fontSize="large" />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Add to favorites" className="product-page-favorite">
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => onAddFavoriteProductHandler(productData)}
+                >
+                  <FavoriteBorderIcon fontSize="large" />
+                </IconButton>
+              </Tooltip>
+            )}
+          </div>
+
           <div className="product-layout">
             {productData && productData.image ? (
               <img

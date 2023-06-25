@@ -1,9 +1,14 @@
 /* Product Page */
+.product-page-name-section {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
 .product-page-name {
   font-size: 2em;
   font-weight: bold !important;
   color: #d32f2f;
-  margin-bottom: 0;
+  margin: 0;
 }
 .product-layout {
   display: grid;
