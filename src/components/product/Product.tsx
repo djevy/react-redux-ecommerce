@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { urlFor } from "../../client";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
@@ -9,47 +9,69 @@ import { CardActionArea, CardActions } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Tooltip from "@mui/material/Tooltip";
 
 import "./product.css";
 import { ProductType } from "../products/allProductsSlice";
+import {
+  addFavoriteProduct,
+  removeFavoriteProduct,
+  selectFavoriteProducts,
+} from "../favorites/favoriteProductsSlice";
 
-function Product({ image, name, slug, price, _id }: ProductType) {
-  const [favorite, setFavorite] = useState(false);
+const Product = (product: ProductType) => {
+  const dispatch = useDispatch();
+  const onAddFavoriteProductHandler = (product: ProductType) => {
+    dispatch(addFavoriteProduct(product));
+  };
+  const onRemoveFavoriteProductHandler = (product: ProductType) => {
+    dispatch(removeFavoriteProduct(product));
+  };
+  const favoriteProducts = useSelector(selectFavoriteProducts);
+
   // console.log(product);
   return (
     <Card className="product-card" sx={{ maxWidth: 345, minWidth: 300 }}>
       <CardActionArea>
-        <Link to={`/product/${slug.current}`}>
+        <Link to={`/product/${product.slug.current}`}>
           <CardMedia
             component="img"
             height="250"
-            image={urlFor(image && image[0])?.url()}
-            alt={name}
+            image={urlFor(product.image && product.image[0])?.url()}
+            alt={product.name}
           />
           <CardContent className="card-content">
             <Typography gutterBottom variant="h5" component="div">
-              {name}
+              {product.name}
             </Typography>
             <Typography className="product-price">
-              £{price.toFixed(2)}
+              £{product.price.toFixed(2)}
             </Typography>
           </CardContent>
         </Link>
       </CardActionArea>
       <CardActions>
-      {favorite ? <Tooltip title="Remove from favorites">
-          <IconButton aria-label="add to favorites" color="error">
-            <FavoriteIcon />
-          </IconButton>
-        </Tooltip>
-        :
-        <Tooltip title="Add to favorites">
-          <IconButton aria-label="add to favorites" >
-            <FavoriteBorderIcon />
-          </IconButton>
-        </Tooltip>}
+        {favoriteProducts.find(favoriteProduct => favoriteProduct._id === product._id) ? (
+          <Tooltip title="Remove from favorites">
+            <IconButton
+              aria-label="add to favorites"
+              color="error"
+              onClick={() => onRemoveFavoriteProductHandler(product)}
+            >
+              <FavoriteIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="Add to favorites">
+            <IconButton
+              aria-label="add to favorites"
+              onClick={() => onAddFavoriteProductHandler(product)}
+            >
+              <FavoriteBorderIcon />
+            </IconButton>
+          </Tooltip>
+        )}
         <Tooltip title="Add to cart">
           <IconButton size="small" color="error" aria-label="add to cart">
             <AddShoppingCartIcon />
@@ -58,6 +80,6 @@ function Product({ image, name, slug, price, _id }: ProductType) {
       </CardActions>
     </Card>
   );
-}
+};
 
 export default Product;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import "./navbar.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,7 +17,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
 import Search from "../search/Search";
 
+import Favorites from "../favorites/Favorites";
+import { selectFavoriteProducts } from "../favorites/favoriteProductsSlice";
+
 const Navbar = () => {
+  const favoriteProductsLength = useSelector(selectFavoriteProducts).length;
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -69,8 +75,6 @@ const Navbar = () => {
       ) {
         return;
       }
-
-      console.log("toggled");
       setDrawState({ ...drawState, [draw]: open });
     };
 
@@ -106,7 +110,7 @@ const Navbar = () => {
               color="inherit"
               onClick={toggleDrawer("favorite", true)}
             >
-              <Badge badgeContent={2} color="error">
+              <Badge badgeContent={favoriteProductsLength} color="error">
                 <FavoriteIcon />
               </Badge>
             </IconButton>
@@ -169,7 +173,7 @@ const Navbar = () => {
               color="inherit"
               onClick={toggleDrawer("favorite", true)}
             >
-              <Badge badgeContent={2} color="error">
+              <Badge badgeContent={favoriteProductsLength} color="error">
                 <FavoriteIcon />
               </Badge>
             </IconButton>
@@ -228,9 +232,10 @@ const Navbar = () => {
           onClick={toggleDrawer("favorite", false)}
           onKeyDown={toggleDrawer("favorite", false)}
         >
-          <p>Favorite Items Component</p>
+          <Favorites />
         </Box>
       </Drawer>
+
       <Drawer
         anchor={"right"}
         open={drawState["cart"]}

@@ -45,10 +45,10 @@ const ProductPage = () => {
   const [sizeIndex, setSizeIndex] = useState(0);
 
   return (
-    <div className="generalPageLayout">
+    <div className="product-page">
       {productData ? (
         <div>
-          <h3>{productData.name}</h3>
+          <h3 className="product-page-name">{productData.name}</h3>
           <div className="product-layout">
             {productData && productData.image ? (
               <img
