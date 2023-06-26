@@ -1,4 +1,14 @@
+
+#navbar-content {
+    margin: auto;
+}
+.menswear-logo {
+    width: 50px;
+    margin-right: 5px;
+}
+
 #mobile-search {
     width: 100%;
     margin-bottom: 10px;
 }
+

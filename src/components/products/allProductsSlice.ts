@@ -12,7 +12,8 @@ export interface ProductType {
   image: string[];
   details: string;
   price: number;
-  sizes?: number[];
+  sizes?: string[];
+  size?: string;
 }
 
 export const loadProducts = createAsyncThunk(

@@ -3,6 +3,9 @@
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-evenly;
+  padding: 0 10px;
+  max-width: 1500px;
+  margin: auto;
 }
 
 /* Products page */

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import MenswearLogo from "../../images/MenswearLogo.png"
 import { useSelector } from "react-redux";
 import "./navbar.css";
 import AppBar from "@mui/material/AppBar";
@@ -19,9 +20,12 @@ import Search from "../search/Search";
 
 import Favorites from "../favorites/Favorites";
 import { selectFavoriteProducts } from "../favorites/favoriteProductsSlice";
+import Cart from "../cart/Cart";
+import { selectCartProducts } from "../cart/cartSlice";
 
 const Navbar = () => {
   const favoriteProductsLength = useSelector(selectFavoriteProducts).length;
+  const cartProductsLength =useSelector(selectCartProducts).length;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -80,9 +84,10 @@ const Navbar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ background: "#193048" }} id="navbar">
         <Toolbar
-          sx={{ display: { xs: "none", sm: "flex" }, background: "#193048" }}
+          sx={{ display: { xs: "none", sm: "flex" } }}
+          id="navbar-content"
         >
           <IconButton
             size="large"
@@ -94,6 +99,7 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
+          <img src={MenswearLogo} className="menswear-logo" alt="Menswear logo"/>
           <Typography
             variant="h5"
             component="h1"
@@ -120,7 +126,7 @@ const Navbar = () => {
               color="inherit"
               onClick={toggleDrawer("cart", true)}
             >
-              <Badge badgeContent={1} color="error">
+              <Badge badgeContent={cartProductsLength} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
@@ -183,7 +189,7 @@ const Navbar = () => {
               color="inherit"
               onClick={toggleDrawer("cart", true)}
             >
-              <Badge badgeContent={1} color="error">
+              <Badge badgeContent={cartProductsLength} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
@@ -247,7 +253,7 @@ const Navbar = () => {
           onClick={toggleDrawer("cart", false)}
           onKeyDown={toggleDrawer("cart", false)}
         >
-          <p>Cart Component</p>
+          <Cart />
         </Box>
       </Drawer>
     </Box>

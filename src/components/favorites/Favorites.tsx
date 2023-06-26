@@ -26,9 +26,12 @@ const Favorites = () => {
       <Divider />
       {favoriteProducts.length > 0 ? (
         favoriteProducts.map((product: ProductType, i: number) => (
-          <div key={i}>
+          <div key={i} className="favorite-products">
             <div className="favorite-product-layout">
-              <Link to={`/product/${product.slug.current}`}>
+              <Link
+                to={`/product/${product.slug.current}`}
+                className="favorite-product-details"
+              >
                 {product && product.image ? (
                   <img
                     src={urlFor(product.image[0])?.url()}
@@ -46,7 +49,7 @@ const Favorites = () => {
               </Link>
               <Tooltip title="Remove from favorites">
                 <IconButton
-                  aria-label="add to favorites"
+                  aria-label="Remove from favorites"
                   color="error"
                   onClick={() => onRemoveFavoriteProductHandler(product)}
                 >
@@ -58,11 +61,12 @@ const Favorites = () => {
           </div>
         ))
       ) : (
-<div className="favorite-product-layout">
+        <div className="favorite-product-layout">
           <p className="add-favorites">
-            Add some of your favorite products whilst browsing and come back later
+            Add some of your favorite products whilst browsing and come back
+            later
           </p>
-</div>
+        </div>
       )}
     </div>
   );

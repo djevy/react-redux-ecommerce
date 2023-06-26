@@ -26,6 +26,7 @@ import {
   selectFavoriteProducts,
 } from "../../components/favorites/favoriteProductsSlice";
 import { IconButton, Tooltip } from "@mui/material";
+import { addCartProduct } from "../../components/cart/cartSlice";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -36,6 +37,14 @@ const ProductPage = () => {
   };
   const onRemoveFavoriteProductHandler = (product: ProductType) => {
     dispatch(removeFavoriteProduct(product));
+  };
+  const onAddCartProductHandler = (product: ProductType) => {
+    const productWithSizeAndQuantity = {
+      ...product,
+      size: product.sizes && product.sizes[sizeIndex],
+      quantity: productQuantity,
+    };
+    dispatch(addCartProduct(productWithSizeAndQuantity));
   };
 
   useEffect(() => {
@@ -57,7 +66,27 @@ const ProductPage = () => {
   // console.log(productData);
   const [index, setIndex] = useState(0);
   const [sizeIndex, setSizeIndex] = useState(0);
+  const handleSize = (i: number) => {
+    setSizeIndex(i);
+
+    console.log(productData.size);
+  };
+  const [productQuantity, setProductQuantity] = useState(0);
   const favoriteProducts = useSelector(selectFavoriteProducts);
+
+  const decreaseProductQuantity = () => {
+    if (productQuantity > 0) {
+      setProductQuantity(productQuantity - 1);
+    }
+  };
+  const increaseProductQuantity = () => {
+    setProductQuantity(productQuantity + 1);
+  };
+
+  const handleProductQuantityInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setProductQuantity(parseInt(e.target.value));
+  };
 
   return (
     <div className="product-page">
@@ -68,7 +97,10 @@ const ProductPage = () => {
             {favoriteProducts.find(
               (favoriteProduct) => favoriteProduct._id === productData._id
             ) ? (
-              <Tooltip title="Remove from favorites" className="product-page-favorite">
+              <Tooltip
+                title="Remove from favorites"
+                className="product-page-favorite"
+              >
                 <IconButton
                   aria-label="add to favorites"
                   color="error"
@@ -78,7 +110,10 @@ const ProductPage = () => {
                 </IconButton>
               </Tooltip>
             ) : (
-              <Tooltip title="Add to favorites" className="product-page-favorite">
+              <Tooltip
+                title="Add to favorites"
+                className="product-page-favorite"
+              >
                 <IconButton
                   aria-label="add to favorites"
                   onClick={() => onAddFavoriteProductHandler(productData)}
@@ -142,7 +177,7 @@ const ProductPage = () => {
                       key={size}
                       variant={i === sizeIndex ? "contained" : "outlined"}
                       color="error"
-                      onClick={() => setSizeIndex(i)}
+                      onClick={() => handleSize(i)}
                     >
                       {size}
                     </Button>
@@ -154,16 +189,15 @@ const ProductPage = () => {
                 <p className="quantity-details">
                   <span
                     className="minus-quantity"
-                    // onClick={decreaseProductQuantity}
+                    onClick={decreaseProductQuantity}
                   >
                     <RemoveIcon />
                   </span>
-                  {/* <span className="number-quantity">{productQuantity}</span> */}
-                  <span className="number-quantity">{0}</span>
+                  <span className="number-quantity">{productQuantity}</span>
 
                   <span
                     className="plus-quantity"
-                    // onClick={increaseProductQuantity}
+                    onClick={increaseProductQuantity}
                   >
                     <AddIcon />
                   </span>
@@ -174,6 +208,8 @@ const ProductPage = () => {
                   variant="contained"
                   color="error"
                   className="add-to-cart"
+                  onClick={() => onAddCartProductHandler(productData)}
+                  disabled={productQuantity === 0}
                   //   onClick={() => addToCart(productData, productQuantity)}
                 >
                   Add to Cart

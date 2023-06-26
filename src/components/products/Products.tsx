@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { ProductType, selectFilteredAllProducts } from "./allProductsSlice";
 import Backdrop from "@mui/material/Backdrop";
@@ -8,7 +7,6 @@ import "./products.css";
 import { RootState } from "../../store";
 
 const Products = () => {
-  // const dispatch = useDispatch();
   const { isLoading } = useSelector((state: RootState) => state.allProducts);
   const allProducts = useSelector(selectFilteredAllProducts);
   console.log(allProducts);
