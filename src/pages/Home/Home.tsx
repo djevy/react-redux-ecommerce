@@ -1,12 +1,10 @@
-import React from "react";
 import Products from "../../components/products/Products";
+import Banner from "../../components/banner/Banner";
 
-type Props = {};
-
-const Home = (props: Props) => {
+const Home = () => {
   return (
     <div>
-      <h2>Banner</h2>
+      <Banner />
       <Products />
     </div>
   );

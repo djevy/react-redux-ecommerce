@@ -99,7 +99,7 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <img src={MenswearLogo} className="menswear-logo" alt="Menswear logo"/>
+          <Link to={"/"}><img src={MenswearLogo} className="menswear-logo" alt="Menswear logo"/></Link>
           <Typography
             variant="h5"
             component="h1"
@@ -163,13 +163,7 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h5"
-            component="h1"
-            sx={{ display: { sm: "block" } }}
-          >
-            <Link to={"/"}>Menswear</Link>
-          </Typography>
+          <Link to={"/"}><img src={MenswearLogo} className="menswear-logo" alt="Menswear logo"/></Link>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { md: "flex" }, margin: "auto" }}>

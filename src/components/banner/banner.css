@@ -1,0 +1,78 @@
+/* Hero Banner */
+.hero-banner-container {
+  padding: 100px 40px;
+  background-color: #f0efef;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  max-height: 500px;
+  max-width: 900px;
+  margin: 20px 10px;
+  height: 100%;
+  line-height: 0.9;
+  border: #d32f2f solid 2px;
+}
+.hero-banner-container .banner-small-text {
+  font-size: 0.8em;
+  margin: 5px;
+}
+.hero-banner-container button {
+  font-size: 18px;
+  cursor: pointer;
+  transform: scale(1, 1);
+  transition: transform 0.5s ease;
+  margin-top: 10px;
+}
+.hero-banner-container button:hover {
+  transform: scale(1.1, 1.1);
+}
+.banner-large-text {
+  grid-column: 1;
+  align-self: center;
+}
+.hero-banner-container h3 {
+  font-size: 1.5em;
+  margin-top: 4px;
+}
+.hero-banner-container h2 {
+  color: #d32f2f;
+  font-size: 2.5em;
+  text-transform: uppercase;
+  margin: auto;
+}
+.hero-banner-image {
+  position: relative;
+  justify-self: center;
+  /* max-width: 300px; */
+  /* max-height: 300px; */
+  width: 100%;
+  border-radius: 10px;
+  grid-column: 2;
+}
+/* .desc {
+    grid-column: 2 span;
+    align-items: center;
+  }
+  .desc h5 {
+    align-self: unset;
+    margin: 5px 0px;
+  }
+  .desc p {
+    align-self: unset;
+  } */
+
+/* ---- Mobile ----*/
+@media only screen and (max-width: 425px) {
+    .hero-banner-container {
+        padding: 40px 20px;
+      }
+  .banner-large-text {
+    grid-column: span 2;
+    align-self: center;
+  }
+  .hero-image-link {
+    margin-top: 10px;
+    grid-column: span 2;
+    align-self: center;
+  }
+}

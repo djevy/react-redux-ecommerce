@@ -41,6 +41,7 @@
 }
 #checkout-button {
   display: flex;
+  justify-content: center;
 }
 .cart-products .quantity {
   margin-bottom: 5px;

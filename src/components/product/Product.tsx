@@ -7,7 +7,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, CardActions } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Tooltip from "@mui/material/Tooltip";
@@ -51,7 +50,7 @@ const Product = (product: ProductType) => {
           </CardContent>
         </Link>
       </CardActionArea>
-      <CardActions>
+      <div className="product-favorite-button">
         {favoriteProducts.find(favoriteProduct => favoriteProduct._id === product._id) ? (
           <Tooltip title="Remove from favorites">
             <IconButton
@@ -59,7 +58,7 @@ const Product = (product: ProductType) => {
               color="error"
               onClick={() => onRemoveFavoriteProductHandler(product)}
             >
-              <FavoriteIcon />
+              <FavoriteIcon fontSize="large"/>
             </IconButton>
           </Tooltip>
         ) : (
@@ -68,16 +67,11 @@ const Product = (product: ProductType) => {
               aria-label="add to favorites"
               onClick={() => onAddFavoriteProductHandler(product)}
             >
-              <FavoriteBorderIcon />
+              <FavoriteBorderIcon fontSize="large"/>
             </IconButton>
           </Tooltip>
         )}
-        <Tooltip title="Add to cart">
-          <IconButton size="small" color="error" aria-label="add to cart">
-            <AddShoppingCartIcon />
-          </IconButton>
-        </Tooltip>
-      </CardActions>
+      </div>
     </Card>
   );
 };
