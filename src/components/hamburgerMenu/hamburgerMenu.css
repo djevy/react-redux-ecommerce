@@ -1,0 +1,39 @@
+.menu-container {
+  padding: 5px;
+}
+
+.menu-title {
+  text-align: center;
+  font-weight: bold;
+  color: #d32f2f;
+  font-size: 1.5em;
+}
+.menu-layout {
+  text-align: center;
+}
+.menu-accordion {
+    margin: 10px 0;
+}
+.menu-accordion-title {
+    font-weight: bold !important;
+    color: #d32f2f;
+    font-size: 1.2em;
+}
+.menu-links {
+  text-align: center;
+  font-weight: bold;
+  color: #d32f2f;
+  font-size: 1.2em;
+}
+.menu-links p{
+    font-weight: bold;
+    color: #000;
+  }
+
+.menu-links:hover {
+text-decoration: underline;
+  }
+.menu-links h4 {
+    margin: 10px 0;
+}
+

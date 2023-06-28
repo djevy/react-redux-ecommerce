@@ -3,22 +3,21 @@ import "./banner.css";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { loadBanner, selectBanner } from "./bannerSlice";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { urlFor } from "../../client";
 import { Link } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
-type Props = {};
-
-const Banner = (props: Props) => {
+const Banner = () => {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(loadBanner());
   }, [dispatch]);
   const banner = useSelector(selectBanner)[0];
+  const isLoading = useSelector((state: RootState) => state.banner);
   console.log(banner);
   return (
-    <div>
+    <div className="banner">
       {banner ? (
         <div className="hero-banner-container">
           <div className="banner-large-text">
@@ -31,18 +30,17 @@ const Banner = (props: Props) => {
               </Button>
             </Link>
           </div>
-          <Link to="/sales" className="hero-image-link">
-            <img
-              src={urlFor(banner.image)?.url()}
-              alt={banner.smallText}
-              className="hero-banner-image"
-            />
-          </Link>
-
-          {/* <div className="desc">
-          <h5>{}</h5>
-          <p>{desc}</p>
-        </div> */}
+          {isLoading ? (
+            <Link to="/sales" className="hero-image-link">
+              <img
+                src={urlFor(banner.image)?.url()}
+                alt={banner.smallText}
+                className="hero-banner-image"
+              />
+            </Link>
+          ) : (
+            <CircularProgress />
+          )}
         </div>
       ) : (
         <CircularProgress color="inherit" />

@@ -83,11 +83,6 @@ const ProductPage = () => {
     setProductQuantity(productQuantity + 1);
   };
 
-  const handleProductQuantityInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setProductQuantity(parseInt(e.target.value));
-  };
-
   return (
     <div className="product-page">
       {productData ? (
@@ -237,7 +232,7 @@ const ProductPage = () => {
           <div className="other-products-wrapper">
             <h2>You may also like</h2>
             <div>
-              <div className="other-products-container">
+              <div className="products-layout">
                 {filteredProducts ? (
                   filteredProducts.map((product: ProductType) => (
                     <Product

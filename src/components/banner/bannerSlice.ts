@@ -4,11 +4,7 @@ import { client } from "../../client";
 export interface BannerType {
   _id: string;
   buttonText: string;
-  slug: {
-    current: string;
-  };
   image: string;
-  details: string;
   smallText: string;
   midText: string;
   largeText: string;

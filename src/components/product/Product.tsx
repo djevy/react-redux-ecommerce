@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, CardActions } from "@mui/material";
+import { CardActionArea } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -31,7 +31,7 @@ const Product = (product: ProductType) => {
 
   // console.log(product);
   return (
-    <Card className="product-card" sx={{ maxWidth: 345, minWidth: 300 }}>
+<Card className="product-card" sx={{ maxWidth: 300, minWidth: 300 }}>
       <CardActionArea>
         <Link to={`/product/${product.slug.current}`}>
           <CardMedia
@@ -39,6 +39,7 @@ const Product = (product: ProductType) => {
             height="250"
             image={urlFor(product.image && product.image[0])?.url()}
             alt={product.name}
+            loading="lazy"
           />
           <CardContent className="card-content">
             <Typography gutterBottom variant="h5" component="div">

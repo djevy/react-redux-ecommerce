@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MenswearLogo from "../../images/MenswearLogo.png"
+import MenswearLogo from "../../images/MenswearLogo.png";
 import { useSelector } from "react-redux";
 import "./navbar.css";
 import AppBar from "@mui/material/AppBar";
@@ -22,10 +22,11 @@ import Favorites from "../favorites/Favorites";
 import { selectFavoriteProducts } from "../favorites/favoriteProductsSlice";
 import Cart from "../cart/Cart";
 import { selectCartProducts } from "../cart/cartSlice";
+import HamburgerMenu from "../hamburgerMenu/HamburgerMenu";
 
 const Navbar = () => {
   const favoriteProductsLength = useSelector(selectFavoriteProducts).length;
-  const cartProductsLength =useSelector(selectCartProducts).length;
+  const cartProductsLength = useSelector(selectCartProducts).length;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -99,7 +100,13 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Link to={"/"}><img src={MenswearLogo} className="menswear-logo" alt="Menswear logo"/></Link>
+          <Link to={"/"}>
+            <img
+              src={MenswearLogo}
+              className="menswear-logo"
+              alt="Menswear logo"
+            />
+          </Link>
           <Typography
             variant="h5"
             component="h1"
@@ -163,7 +170,13 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Link to={"/"}><img src={MenswearLogo} className="menswear-logo" alt="Menswear logo"/></Link>
+          <Link to={"/"}>
+            <img
+              src={MenswearLogo}
+              className="menswear-logo"
+              alt="Menswear logo"
+            />
+          </Link>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { md: "flex" }, margin: "auto" }}>
@@ -214,10 +227,12 @@ const Navbar = () => {
         <Box
           sx={{ width: 250 }}
           role="presentation"
-          onClick={toggleDrawer("menu", false)}
+          onClick={(event) => {
+            event.stopPropagation(); // Prevent click event propagation
+          }}
           onKeyDown={toggleDrawer("menu", false)}
         >
-          <p>Menu Component</p>
+          <HamburgerMenu />
         </Box>
       </Drawer>
 
@@ -229,7 +244,9 @@ const Navbar = () => {
         <Box
           sx={{ width: 250 }}
           role="presentation"
-          onClick={toggleDrawer("favorite", false)}
+          onClick={(event) => {
+            event.stopPropagation(); // Prevent click event propagation
+          }}
           onKeyDown={toggleDrawer("favorite", false)}
         >
           <Favorites />
@@ -244,7 +261,9 @@ const Navbar = () => {
         <Box
           sx={{ width: 250 }}
           role="presentation"
-          onClick={toggleDrawer("cart", false)}
+          onClick={(event) => {
+            event.stopPropagation(); // Prevent click event propagation
+          }}
           onKeyDown={toggleDrawer("cart", false)}
         >
           <Cart />

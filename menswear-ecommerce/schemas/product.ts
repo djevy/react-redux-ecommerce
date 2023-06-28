@@ -42,6 +42,11 @@ export default {
             type: 'string',
         },
         {
+            name: 'collection',
+            title: 'Collection',
+            type: 'string',
+        },
+        {
             name: 'sizes',
             title: 'Sizes',
             type: 'array',

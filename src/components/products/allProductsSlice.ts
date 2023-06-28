@@ -14,6 +14,8 @@ export interface ProductType {
   price: number;
   sizes?: string[];
   size?: string;
+  category?: string;
+  collection?: string;
 }
 
 export const loadProducts = createAsyncThunk(
@@ -61,14 +63,37 @@ const allProductsSlice = createSlice({
 export const { reducer: allProductsReducer } = allProductsSlice;
 
 export const selectAllProducts = (state: { allProducts: AllProductsState }) =>
-  state.allProducts.products;
+  state.allProducts;
 
 export const selectFilteredAllProducts = createSelector(
   [selectAllProducts, selectSearchTerm],
   (allProducts, searchTerm) => {
-    return allProducts.filter((product: ProductType) =>
+    return allProducts.products.filter((product: ProductType) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  }
+);
+
+export const productCategories = createSelector(
+  [selectAllProducts],
+  (allProducts) => {
+    const categories = [
+      ...new Set(
+        allProducts.products.map((item: ProductType) => item.category)
+      )
+    ];
+    return categories;
+  }
+);
+export const productCollections = createSelector(
+  [selectAllProducts],
+  (allProducts) => {
+    const collections = [
+      ...new Set(
+        allProducts.products.map((item: ProductType) => item.collection)
+      )
+    ];
+    return collections;
   }
 );
 

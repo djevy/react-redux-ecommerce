@@ -17,11 +17,6 @@ export default {
             type: 'string',
         },
         {
-            name: 'desc',
-            title: 'Desc',
-            type: 'string',
-        },
-        {
             name: 'smallText',
             title: 'SmallText',
             type: 'string',
@@ -34,11 +29,6 @@ export default {
         {
             name: 'largeText',
             title: 'LargeText',
-            type: 'string',
-        },
-        {
-            name: 'discount',
-            title: 'Discount',
             type: 'string',
         },
     ],

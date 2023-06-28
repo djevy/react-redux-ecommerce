@@ -1,4 +1,8 @@
 /* Hero Banner */
+.banner {
+  display: flex;
+  justify-content: center;
+}
 .hero-banner-container {
   padding: 100px 40px;
   background-color: #f0efef;
@@ -43,23 +47,10 @@
 .hero-banner-image {
   position: relative;
   justify-self: center;
-  /* max-width: 300px; */
-  /* max-height: 300px; */
   width: 100%;
   border-radius: 10px;
   grid-column: 2;
 }
-/* .desc {
-    grid-column: 2 span;
-    align-items: center;
-  }
-  .desc h5 {
-    align-self: unset;
-    margin: 5px 0px;
-  }
-  .desc p {
-    align-self: unset;
-  } */
 
 /* ---- Mobile ----*/
 @media only screen and (max-width: 425px) {
