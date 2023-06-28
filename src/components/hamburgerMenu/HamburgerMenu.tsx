@@ -2,8 +2,8 @@ import "./hamburgerMenu.css";
 import Divider from "@mui/material/Divider";
 import { useSelector } from "react-redux";
 import {
-  productCategories,
-  productCollections,
+  productCategoryTypes,
+  productCollectionTypes,
 } from "../products/allProductsSlice";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -14,8 +14,8 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 const HamburgerMenu = () => {
-  const categories = useSelector(productCategories);
-  const collections = useSelector(productCollections);
+  const categories = useSelector(productCategoryTypes);
+  const collections = useSelector(productCollectionTypes);
   // console.log("categories", categories)
 
   return (

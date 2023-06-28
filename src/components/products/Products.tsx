@@ -1,15 +1,19 @@
 import { useSelector } from "react-redux";
-import { ProductType, selectFilteredAllProducts } from "./allProductsSlice";
+import { ProductType } from "./allProductsSlice";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Product from "../product/Product";
 import "./products.css";
 import { RootState } from "../../store";
+interface ProductsProps {
+  props: ProductType[];
+  title: string;
+}
 
-const Products = () => {
+const Products = ({props, title}: ProductsProps) => {
   const { isLoading } = useSelector((state: RootState) => state.allProducts);
-  const allProducts = useSelector(selectFilteredAllProducts);
-  console.log(allProducts);
+  
+  console.log(props);
 
   return (
     <div>
@@ -19,9 +23,9 @@ const Products = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <h2>Products</h2>
+      <h2>{title}</h2>
       <div className="products-layout">
-        {allProducts.map((product: ProductType) => (
+        {props.map((product: ProductType) => (
           <Product
             key={product._id}
             image={product.image}

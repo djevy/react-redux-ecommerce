@@ -139,7 +139,7 @@ const ProductPage = () => {
                 productData.image.map((item: ImageUrlBuilder, i: number) => (
                   <img
                     src={item && urlFor(item)?.url()}
-                    alt={productData.slug}
+                    alt={productData.slug.current}
                     key={i}
                     className={
                       i === index
@@ -216,7 +216,7 @@ const ProductPage = () => {
                 productData.image.map((item: ImageUrlBuilder, i: number) => (
                   <img
                     src={item && urlFor(item)?.url()}
-                    alt={productData.slug}
+                    alt={productData.slug.current}
                     key={i}
                     className={
                       i === index
@@ -232,7 +232,7 @@ const ProductPage = () => {
           <div className="other-products-wrapper">
             <h2>You may also like</h2>
             <div>
-              <div className="products-layout">
+              <div className="other-products-layout">
                 {filteredProducts ? (
                   filteredProducts.map((product: ProductType) => (
                     <Product

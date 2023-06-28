@@ -74,24 +74,37 @@ export const selectFilteredAllProducts = createSelector(
   }
 );
 
-export const productCategories = createSelector(
+export const selectProductsByCategory = (category: string) =>
+  createSelector([selectAllProducts], (allProducts) =>
+    allProducts.products.filter(
+      (product: ProductType) => product.category?.toLocaleLowerCase() === category.toLowerCase()
+    )
+  );
+  export const selectProductsByCollection = (collection: string) =>
+  createSelector([selectAllProducts], (allProducts) =>
+    allProducts.products.filter(
+      (product: ProductType) => product.collection?.toLocaleLowerCase() === collection.toLowerCase()
+    )
+  );
+
+export const productCategoryTypes = createSelector(
   [selectAllProducts],
   (allProducts) => {
     const categories = [
       ...new Set(
         allProducts.products.map((item: ProductType) => item.category)
-      )
+      ),
     ];
     return categories;
   }
 );
-export const productCollections = createSelector(
+export const productCollectionTypes = createSelector(
   [selectAllProducts],
   (allProducts) => {
     const collections = [
       ...new Set(
         allProducts.products.map((item: ProductType) => item.collection)
-      )
+      ),
     ];
     return collections;
   }
