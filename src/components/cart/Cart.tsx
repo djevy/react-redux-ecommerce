@@ -101,11 +101,14 @@ const Cart = () => {
         </div>
       )}
       {cartProducts.length > 0 && (
-        <Link to="/checkout" className="buttons" id="checkout-button">
-          <Button variant="contained" color="error" className="add-to-cart">
-            Checkout
-          </Button>
-        </Link>
+        <div>
+          <p>Total: </p>
+          <Link to="/checkout" className="buttons" id="checkout-button">
+            <Button variant="contained" color="error" className="add-to-cart">
+              Checkout
+            </Button>
+          </Link>
+        </div>
       )}
     </div>
   );

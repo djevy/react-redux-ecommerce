@@ -26,7 +26,13 @@ import {
   selectFavoriteProducts,
 } from "../../components/favorites/favoriteProductsSlice";
 import { IconButton, Tooltip } from "@mui/material";
-import { addCartProduct } from "../../components/cart/cartSlice";
+import {
+  CartProductType,
+  addCartProduct,
+  increaseCartProductQuantity,
+  decreaseCartProductQuantity,
+  selectCartProducts,
+} from "../../components/cart/cartSlice";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -47,23 +53,29 @@ const ProductPage = () => {
     dispatch(addCartProduct(productWithSizeAndQuantity));
   };
 
-  useEffect(() => {
-    if (id) {
-      dispatch(loadSingleProduct(id));
+  const increaseProductQuantity = (product: CartProductType) => {
+    dispatch(increaseCartProductQuantity(product));
+    setProductQuantity(productQuantity + 1);
+  };
+  const decreaseProductQuantity = (product: CartProductType) => {
+    if (productQuantity > 0) {
+      setProductQuantity(productQuantity - 1);
     }
-  }, [dispatch, id]);
-
+    dispatch(decreaseCartProductQuantity(product));
+  };
   const { hasError } = useSelector((state: RootState) => state.allProducts);
 
   const productData = useSelector((state: any) => state.singleProduct).product;
+  const cartProducts = useSelector(selectCartProducts);
+  const cartData = productData
+    ? cartProducts.find((product) => product._id === productData._id)
+    : null;
 
   const allProducts = useSelector(selectFilteredAllProducts);
   const filteredProducts = allProducts.filter((product: ProductType) => {
     return product.slug.current !== id;
   });
-  // console.log("filtered", filteredProducts);
-  // console.log(allProducts);
-  // console.log(productData);
+
   const [index, setIndex] = useState(0);
   const [sizeIndex, setSizeIndex] = useState(0);
   const handleSize = (i: number) => {
@@ -71,17 +83,24 @@ const ProductPage = () => {
 
     console.log(productData.size);
   };
-  const [productQuantity, setProductQuantity] = useState(0);
+  const [productQuantity, setProductQuantity] = useState(1);
   const favoriteProducts = useSelector(selectFavoriteProducts);
-
-  const decreaseProductQuantity = () => {
-    if (productQuantity > 0) {
-      setProductQuantity(productQuantity - 1);
+  useEffect(() => {
+    if (id) {
+      dispatch(loadSingleProduct(id));
     }
-  };
-  const increaseProductQuantity = () => {
-    setProductQuantity(productQuantity + 1);
-  };
+  }, [dispatch, id]);
+  useEffect(() => {
+    if (cartData) {
+      setProductQuantity(cartData?.quantity);
+    } else {
+      setProductQuantity(0);
+    }
+  }, [cartData]);
+  // console.log("filtered", filteredProducts);
+  // console.log(allProducts);
+  // console.log("productData", productData);
+  // console.log("cartData", cartData);
 
   return (
     <div className="product-page">
@@ -151,14 +170,6 @@ const ProductPage = () => {
                 ))}
             </div>
             <div className="product-details">
-              {/* <div className="product-reviews">
-                <StarIcon />
-                <StarIcon />
-                <StarIcon />
-                <StarIcon />
-                <StarOutlineIcon />
-              </div> */}
-              {/* <p>(20)</p> */}
               <h3>Details:</h3>
               <p>{productData.details}</p>
               {productData.price && (
@@ -184,15 +195,19 @@ const ProductPage = () => {
                 <p className="quantity-details">
                   <span
                     className="minus-quantity"
-                    onClick={decreaseProductQuantity}
+                    onClick={() => decreaseProductQuantity(productData)}
                   >
                     <RemoveIcon />
                   </span>
-                  <span className="number-quantity">{productQuantity}</span>
+                  {cartData ? (
+                    <span className="number-quantity">{cartData.quantity}</span>
+                  ) : (
+                    <span className="number-quantity">{productQuantity}</span>
+                  )}
 
                   <span
                     className="plus-quantity"
-                    onClick={increaseProductQuantity}
+                    onClick={() => increaseProductQuantity(productData)}
                   >
                     <AddIcon />
                   </span>
@@ -205,7 +220,6 @@ const ProductPage = () => {
                   className="add-to-cart"
                   onClick={() => onAddCartProductHandler(productData)}
                   disabled={productQuantity === 0}
-                  //   onClick={() => addToCart(productData, productQuantity)}
                 >
                   Add to Cart
                 </Button>

@@ -75,7 +75,7 @@ export const cartProductsSlice = createSlice({
       const product = state.products.find(
         (product: CartProductType) => product._id === action.payload._id
       );
-      if (product) {
+      if (product && product.quantity > 0) {
         product.quantity--;
         saveState(state);
       }
