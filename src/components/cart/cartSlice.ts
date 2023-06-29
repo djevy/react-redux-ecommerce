@@ -68,6 +68,7 @@ export const cartProductsSlice = createSlice({
       );
       if (product) {
         product.quantity++;
+        saveState(state);
       }
     },
     decreaseCartProductQuantity: (state, action) => {
@@ -76,6 +77,7 @@ export const cartProductsSlice = createSlice({
       );
       if (product) {
         product.quantity--;
+        saveState(state);
       }
     },
   },
