@@ -5,6 +5,8 @@
 }
 #pageContents {
   padding-bottom: 60px;
+  max-width: 1500px;
+  margin: auto;
 }
 
 a {

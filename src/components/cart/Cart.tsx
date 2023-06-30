@@ -16,12 +16,13 @@ import {
   selectCartProducts,
   increaseCartProductQuantity,
   decreaseCartProductQuantity,
+  selectCartTotal,
 } from "./cartSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cartProducts = useSelector(selectCartProducts);
-
+  const cartTotal = useSelector(selectCartTotal);
   const onRemoveCartProductHandler = (product: CartProductType) => {
     dispatch(removeCartProduct(product));
   };
@@ -102,7 +103,7 @@ const Cart = () => {
       )}
       {cartProducts.length > 0 && (
         <div>
-          <p>Total: </p>
+          <p className="cart-title">Total: £{cartTotal.toFixed(2)}</p>
           <Link to="/checkout" className="buttons" id="checkout-button">
             <Button variant="contained" color="error" className="add-to-cart">
               Checkout
