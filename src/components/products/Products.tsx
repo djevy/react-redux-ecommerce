@@ -10,20 +10,20 @@ interface ProductsProps {
   title: string;
 }
 
-const Products = ({props, title}: ProductsProps) => {
+const Products = ({ props, title }: ProductsProps) => {
   const { isLoading } = useSelector((state: RootState) => state.allProducts);
-  
-  console.log(props);
+
+  // console.log(props);
 
   return (
-    <div>
+    <div className="products-component">
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <h2>{title}</h2>
+      <h2 className="products-title">{title}</h2>
       <div className="products-layout">
         {props.map((product: ProductType) => (
           <Product

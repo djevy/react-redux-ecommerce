@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { client } from "../../client";
 import { selectSearchTerm } from "../search/searchSlice";
+import { RootState } from "../../store";
 
 export interface ProductType {
   _id: string;
@@ -62,7 +63,7 @@ const allProductsSlice = createSlice({
 
 export const { reducer: allProductsReducer } = allProductsSlice;
 
-export const selectAllProducts = (state: { allProducts: AllProductsState }) =>
+export const selectAllProducts = (state: RootState) =>
   state.allProducts;
 
 export const selectFilteredAllProducts = createSelector(
@@ -77,13 +78,13 @@ export const selectFilteredAllProducts = createSelector(
 export const selectProductsByCategory = (category: string) =>
   createSelector([selectAllProducts], (allProducts) =>
     allProducts.products.filter(
-      (product: ProductType) => product.category?.toLocaleLowerCase() === category.toLowerCase()
+      (product: ProductType) => product.category?.toLowerCase() === category.toLowerCase()
     )
   );
   export const selectProductsByCollection = (collection: string) =>
   createSelector([selectAllProducts], (allProducts) =>
     allProducts.products.filter(
-      (product: ProductType) => product.collection?.toLocaleLowerCase() === collection.toLowerCase()
+      (product: ProductType) => product.collection?.toLowerCase() === collection.toLowerCase()
     )
   );
 

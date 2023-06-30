@@ -1,6 +1,18 @@
+.products-carousel-component {
+  margin: 20px 0;
+}
 .styles-module_carousel-base__3keqD {
   display: flex;
   align-items: center;
+}
+.styles-module_carousel-base__3keqD:nth-child(1),
+.styles-module_carousel-base__3keqD:nth-child(3) {
+  cursor: pointer;
+}
+.products-carousel-title {
+  font-size: 2em;
+  font-weight: bold;
+  color: #d32f2f;
 }
 .single-product {
   display: flex;

@@ -15,7 +15,7 @@ const Banner = () => {
   }, [dispatch]);
   const banner = useSelector(selectBanner)[0];
   const isLoading = useSelector((state: RootState) => state.banner);
-  console.log(banner);
+
   return (
     <div className="banner">
       {banner ? (

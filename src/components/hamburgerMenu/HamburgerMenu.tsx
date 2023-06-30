@@ -40,7 +40,7 @@ const HamburgerMenu = () => {
             id="panel-category-header"
           >
             <Typography className="menu-accordion-title">
-              Product Categories
+              Categories
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -70,7 +70,7 @@ const HamburgerMenu = () => {
             {collections &&
               collections.map((collection, i) => (
                 <Link
-                  to={`/products/${collection?.toLocaleLowerCase()}`}
+                  to={`/collections/${collection?.toLocaleLowerCase()}`}
                   key={i}
                   className="menu-links"
                 >
