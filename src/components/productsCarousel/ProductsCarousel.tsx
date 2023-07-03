@@ -10,6 +10,7 @@ import "./productsCarousel.css";
 import { RootState } from "../../store";
 import { ProductType } from "../products/allProductsSlice";
 import { Link } from "react-router-dom";
+import { scrollToTop } from "../../utils/ScrollToTop";
 
 interface ProductsProps {
   props: ProductType[];
@@ -29,9 +30,9 @@ const ProductsCarousel = ({ props, title, type }: ProductsProps) => {
         <CircularProgress color="inherit" />
       </Backdrop>
 
-{     type ==="category" ? <Link to={`/products/${title.toLowerCase()}`}>
+{     type ==="category" ? <Link to={`/products/${title.toLowerCase()}`} onClick={scrollToTop}>
         <h2 className="products-carousel-title">{title}</h2>
-      </Link> : <Link to={`/collections/${title.toLowerCase()}`}>
+      </Link> : <Link to={`/collections/${title.toLowerCase()}`} onClick={scrollToTop}>
         <h2 className="products-carousel-title">{title} Collection</h2>
       </Link>}
       {props.length > 1 ? (

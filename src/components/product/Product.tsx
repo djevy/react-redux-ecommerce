@@ -14,6 +14,7 @@ import {
   removeFavoriteProduct,
   selectFavoriteProducts,
 } from "../favorites/favoriteProductsSlice";
+import { scrollToTop } from "../../utils/ScrollToTop";
 
 const Product = (product: ProductType) => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const Product = (product: ProductType) => {
   // console.log(product);
   return (
     <div className="product-card">
-      <Link to={`/product/${product.slug.current}`}>
+      <Link to={`/product/${product.slug.current}`} onClick={scrollToTop}>
         <img
           className="product-image"
           src={urlFor(product.image && product.image[0])?.url()}

@@ -13,6 +13,8 @@ import NotFound from "./pages/NotFound";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
 import CollectionsPage from "./pages/collectionsPage/CollectionsPage";
+import CheckoutPage from "./pages/checkoutPage/CheckoutPage";
+import SalesPage from "./pages/salesPage/SalesPage"
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -29,6 +31,8 @@ function App() {
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/products/:category" element={<ProductsPage />} />
           <Route path="/collections/:collection" element={<CollectionsPage />} />
+          <Route path="/sales" element={<SalesPage />}/>
+          <Route path="/checkout" element={<CheckoutPage />}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

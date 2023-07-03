@@ -12,6 +12,7 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
+import Tooltip from "@mui/material/Tooltip";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -57,8 +58,16 @@ const Navbar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Tooltip title="Coming soon">
+          <p>Profile</p>
+        </Tooltip>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Tooltip title="Coming soon">
+          <p>My account</p>
+        </Tooltip>
+      </MenuItem>
     </Menu>
   );
 
@@ -90,22 +99,26 @@ const Navbar = () => {
           sx={{ display: { xs: "none", sm: "flex" } }}
           id="navbar-content"
         >
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={toggleDrawer("menu", true)}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Tooltip title="Menu">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+              onClick={toggleDrawer("menu", true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Tooltip>
           <Link to={"/"}>
-            <img
-              src={MenswearLogo}
-              className="menswear-logo"
-              alt="Menswear logo"
-            />
+            <Tooltip title="Home">
+              <img
+                src={MenswearLogo}
+                className="menswear-logo"
+                alt="Menswear logo"
+              />
+            </Tooltip>
           </Link>
           <Typography
             variant="h5"
@@ -117,38 +130,43 @@ const Navbar = () => {
           <Search />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show number of favorite items "
-              color="inherit"
-              onClick={toggleDrawer("favorite", true)}
-            >
-              <Badge badgeContent={favoriteProductsLength} color="error">
-                <FavoriteIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show number of items in the cart"
-              color="inherit"
-              onClick={toggleDrawer("cart", true)}
-            >
-              <Badge badgeContent={cartProductsLength} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <Tooltip title="Favorites">
+              <IconButton
+                size="large"
+                aria-label="show number of favorite items "
+                color="inherit"
+                onClick={toggleDrawer("favorite", true)}
+              >
+                <Badge badgeContent={favoriteProductsLength} color="error">
+                  <FavoriteIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Cart">
+              <IconButton
+                size="large"
+                aria-label="show number of items in the cart"
+                color="inherit"
+                onClick={toggleDrawer("cart", true)}
+              >
+                <Badge badgeContent={cartProductsLength} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Account">
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
 
