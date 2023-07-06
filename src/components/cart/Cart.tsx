@@ -17,12 +17,14 @@ import {
   increaseCartProductQuantity,
   decreaseCartProductQuantity,
   selectCartTotal,
+  selectCartDealTotal,
 } from "./cartSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cartProducts = useSelector(selectCartProducts);
   const cartTotal = useSelector(selectCartTotal);
+  const cartDealTotal = useSelector(selectCartDealTotal);
   const onRemoveCartProductHandler = (product: CartProductType) => {
     dispatch(removeCartProduct(product));
   };
@@ -56,9 +58,20 @@ const Cart = () => {
                 )}
 
                 <p className="cart-product-name">{product.name}</p>
-                <p className="cart-product-price">
-                  £{product.price.toFixed(2)}
-                </p>
+                {product.dealPrice ? (
+                  <div>
+                    <p className="cart-product-price cart-product-price-old">
+                      £{product.price.toFixed(2)}
+                    </p>
+                    <p className="cart-product-price">
+                      £{product.dealPrice} x {product.quantity}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="cart-product-price">
+                    £{product.price.toFixed(2)} x {product.quantity}
+                  </p>
+                )}
               </Link>
               <Tooltip title="Remove from cart">
                 <IconButton
@@ -103,7 +116,19 @@ const Cart = () => {
       )}
       {cartProducts.length > 0 && (
         <div>
-          <p className="cart-title">Total: £{cartTotal.toFixed(2)}</p>
+          {cartDealTotal !== cartTotal ? (
+            <div>
+              <p className="cart-total cart-total-old">
+                £{cartTotal.toFixed(2)}
+              </p>
+              <p className="cart-total cart-total-saving">
+                Saving £{(cartTotal - cartDealTotal).toFixed(2)}
+              </p>
+              <p className="cart-total">Total: £{cartDealTotal.toFixed(2)}</p>
+            </div>
+          ) : (
+            <p className="cart-total">Total: £{cartTotal.toFixed(2)}</p>
+          )}
           <Link to="/checkout" className="buttons" id="checkout-button">
             <Button variant="contained" color="error" className="add-to-cart">
               Checkout

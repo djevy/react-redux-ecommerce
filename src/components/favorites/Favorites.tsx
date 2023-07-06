@@ -43,9 +43,21 @@ const Favorites = () => {
                 )}
 
                 <p className="favorite-product-name">{product.name}</p>
-                <p className="favorite-product-price">
-                  £{product.price.toFixed(2)}
-                </p>
+
+                {product.dealPrice ? (
+                  <div>
+                    <p className="favorite-product-price favorite-product-price-old">
+                      £{product.price.toFixed(2)}
+                    </p>
+                    <p className="favorite-product-price">
+                      £{product.dealPrice}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="favorite-product-price">
+                    £{product.price.toFixed(2)}
+                  </p>
+                )}
               </Link>
               <Tooltip title="Remove from favorites">
                 <IconButton

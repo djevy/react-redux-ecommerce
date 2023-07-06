@@ -1,18 +1,13 @@
-import React, { useEffect } from "react";
 import "./banner.css";
 import Button from "@mui/material/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { loadBanner, selectBanner } from "./bannerSlice";
-import { AppDispatch, RootState } from "../../store";
+import { useSelector } from "react-redux";
+import { selectBanner } from "./bannerSlice";
+import { RootState } from "../../store";
 import { urlFor } from "../../client";
 import { Link } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
 const Banner = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(loadBanner());
-  }, [dispatch]);
   const banner = useSelector(selectBanner)[0];
   const isLoading = useSelector((state: RootState) => state.banner);
 

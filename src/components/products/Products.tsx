@@ -34,6 +34,7 @@ const Products = ({ props, title }: ProductsProps) => {
             slug={product.slug}
             details={product.details}
             price={product.price}
+            dealPrice={product.dealPrice}
           />
         ))}
       </div>

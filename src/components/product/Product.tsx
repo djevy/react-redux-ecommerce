@@ -40,9 +40,20 @@ const Product = (product: ProductType) => {
           <Typography gutterBottom variant="h5" component="div">
             {product.name}
           </Typography>
-          <Typography className="product-price">
-            £{product.price.toFixed(2)}
-          </Typography>
+          {product.dealPrice ? (
+            <div className="product-prices">
+              <Typography className="product-price old-price">
+                £{product.price.toFixed(2)}
+              </Typography>
+              <Typography className="product-price">
+                £{product.dealPrice}
+              </Typography>
+            </div>
+          ) : (
+            <Typography className="product-price">
+              £{product.price.toFixed(2)}
+            </Typography>
+          )}
         </div>
       </Link>
 

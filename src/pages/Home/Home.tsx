@@ -10,8 +10,8 @@ import ProductsCarousel from "../../components/productsCarousel/ProductsCarousel
 
 const Home = () => {
   const allProducts = useSelector(selectFilteredAllProducts);
-  const jacketProducts = useSelector(
-    useMemo(() => selectProductsByCategory("jackets"), [])
+  const shoeProducts = useSelector(
+    useMemo(() => selectProductsByCategory("shoes"), [])
   );
   const summerProducts = useSelector(
     useMemo(() => selectProductsByCollection("summer"), [])
@@ -19,14 +19,18 @@ const Home = () => {
   const weddingProducts = useSelector(
     useMemo(() => selectProductsByCollection("wedding"), [])
   );
-  // console.log("jackets", jacketProducts);
+  const gymProducts = useSelector(
+    useMemo(() => selectProductsByCollection("gym wear"), [])
+  );
+
   return (
     <div>
       <Banner />
       <ProductsCarousel props={allProducts} title={"All Products"} type="category"/>
-      <ProductsCarousel props={weddingProducts} title={"Wedding"} type="collection"/>
+      <ProductsCarousel props={gymProducts} title={"Gym"} type="collection"/>
       <ProductsCarousel props={summerProducts} title={"Summer"} type="collection"/>
-      <ProductsCarousel props={jacketProducts} title={"Jackets"} type="category"/>
+      <ProductsCarousel props={weddingProducts} title={"Wedding"} type="collection"/>
+      <ProductsCarousel props={shoeProducts} title={"Shoes"} type="category"/>
     </div>
   );
 };

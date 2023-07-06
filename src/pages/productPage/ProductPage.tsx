@@ -80,8 +80,7 @@ const ProductPage = () => {
   const [sizeIndex, setSizeIndex] = useState(0);
   const handleSize = (i: number) => {
     setSizeIndex(i);
-
-    console.log(productData.size);
+    // console.log(productData.size);
   };
   const [productQuantity, setProductQuantity] = useState(1);
   const favoriteProducts = useSelector(selectFavoriteProducts);
@@ -172,7 +171,14 @@ const ProductPage = () => {
             <div className="product-details">
               <h3>Details:</h3>
               <p>{productData.details}</p>
-              {productData.price && (
+              {productData.dealPrice ? (
+                <div className="product-prices">
+                  <p className="product-price old-price">
+                    £{productData.price.toFixed(2)}
+                  </p>
+                  <p className="product-price">£{productData.dealPrice}</p>
+                </div>
+              ) : (
                 <p className="product-price">£{productData.price.toFixed(2)}</p>
               )}
               {productData.sizes && (
@@ -257,6 +263,7 @@ const ProductPage = () => {
                       slug={product.slug}
                       details={product.details}
                       price={product.price}
+                      dealPrice={product.dealPrice}
                     />
                   ))
                 ) : (

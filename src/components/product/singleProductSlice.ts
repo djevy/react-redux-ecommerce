@@ -35,7 +35,13 @@ const singleProductSlice = createSlice({
         state.hasError = false;
       })
       .addCase(loadSingleProduct.fulfilled, (state, action) => {
-        state.product = action.payload;
+        const product = action.payload;
+        if (product.deal && product.price) {
+          const dealPrice = (product.price - (product.price / 100) * product.deal).toFixed(2);
+          state.product = { ...product, dealPrice };
+        } else {
+          state.product = product;
+        }
         state.isLoading = false;
         state.hasError = false;
       })

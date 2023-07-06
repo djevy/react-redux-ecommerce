@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { loadProducts } from "./components/products/allProductsSlice";
+import { loadBanner } from "./components/banner/bannerSlice";
 import { AppDispatch } from "./store";
 
 import Home from "./pages/Home/Home";
@@ -16,10 +17,12 @@ import CollectionsPage from "./pages/collectionsPage/CollectionsPage";
 import CheckoutPage from "./pages/checkoutPage/CheckoutPage";
 import SalesPage from "./pages/salesPage/SalesPage"
 
+
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(loadProducts());
+    dispatch(loadBanner());
   }, [dispatch]);
   return (
     <div className="App">

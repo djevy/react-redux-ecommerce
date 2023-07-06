@@ -59,6 +59,7 @@ const ProductsCarousel = ({ props, title, type }: ProductsProps) => {
                     slug={product.slug}
                     details={product.details}
                     price={product.price}
+                    dealPrice={product.dealPrice}
                   />
                 ))}
               </Carousel>
@@ -86,6 +87,7 @@ const ProductsCarousel = ({ props, title, type }: ProductsProps) => {
                     slug={product.slug}
                     details={product.details}
                     price={product.price}
+                    dealPrice={product.dealPrice}
                   />
                 ))}
               </Carousel>
@@ -113,6 +115,7 @@ const ProductsCarousel = ({ props, title, type }: ProductsProps) => {
                     slug={product.slug}
                     details={product.details}
                     price={product.price}
+                    dealPrice={product.dealPrice}
                   />
                 ))}
               </Carousel>
@@ -130,6 +133,7 @@ const ProductsCarousel = ({ props, title, type }: ProductsProps) => {
               slug={product.slug}
               details={product.details}
               price={product.price}
+              dealPrice={product.dealPrice}
             />
           ))}
         </div>

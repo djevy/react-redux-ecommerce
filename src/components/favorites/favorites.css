@@ -33,6 +33,11 @@
 .favorite-product-price {
   font-weight: bold !important;
 }
+.favorite-product-price-old {
+  font-weight: bold !important;
+  color: #999898;
+  text-decoration: line-through #d32f2f;
+}
 .add-favorites {
     text-align: center;
 }

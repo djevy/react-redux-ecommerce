@@ -17,6 +17,8 @@ export interface ProductType {
   size?: string;
   category?: string;
   collection?: string;
+  deal?: number;
+  dealPrice?: number;
 }
 
 export const loadProducts = createAsyncThunk(
@@ -50,7 +52,16 @@ const allProductsSlice = createSlice({
         state.hasError = false;
       })
       .addCase(loadProducts.fulfilled, (state, action) => {
-        state.products = action.payload;
+        state.products = action.payload.map((product: ProductType) => {
+          if (product.deal && product.price) {
+            const dealPrice = (
+              product.price -
+              (product.price / 100) * product.deal
+            ).toFixed(2);
+            return { ...product, dealPrice };
+          }
+          return product;
+        });
         state.isLoading = false;
         state.hasError = false;
       })
@@ -63,8 +74,7 @@ const allProductsSlice = createSlice({
 
 export const { reducer: allProductsReducer } = allProductsSlice;
 
-export const selectAllProducts = (state: RootState) =>
-  state.allProducts;
+export const selectAllProducts = (state: RootState) => state.allProducts;
 
 export const selectFilteredAllProducts = createSelector(
   [selectAllProducts, selectSearchTerm],
@@ -78,15 +88,28 @@ export const selectFilteredAllProducts = createSelector(
 export const selectProductsByCategory = (category: string) =>
   createSelector([selectAllProducts], (allProducts) =>
     allProducts.products.filter(
-      (product: ProductType) => product.category?.toLowerCase() === category.toLowerCase()
+      (product: ProductType) =>
+        product.category?.toLowerCase() === category.toLowerCase()
     )
   );
-  export const selectProductsByCollection = (collection: string) =>
+export const selectProductsByCollection = (collection: string) =>
   createSelector([selectAllProducts], (allProducts) =>
     allProducts.products.filter(
-      (product: ProductType) => product.collection?.toLowerCase() === collection.toLowerCase()
+      (product: ProductType) =>
+        product.collection?.toLowerCase() === collection.toLowerCase()
     )
   );
+
+export const selectProductsByDeals = (deal: number) =>
+  createSelector([selectAllProducts], (allProducts) =>
+    allProducts.products.filter((product: ProductType) => product.deal === deal)
+  );
+export const selectAllDealProducts = createSelector(
+  [selectAllProducts],
+  (allProducts) => {
+    return allProducts.products.filter((product: ProductType) => product.deal);
+  }
+);
 
 export const productCategoryTypes = createSelector(
   [selectAllProducts],
@@ -108,6 +131,15 @@ export const productCollectionTypes = createSelector(
       ),
     ];
     return collections;
+  }
+);
+export const productDealTypes = createSelector(
+  [selectAllProducts],
+  (allProducts) => {
+    const deals = [
+      ...new Set(allProducts.products.map((item: ProductType) => item.deal)),
+    ];
+    return deals;
   }
 );
 

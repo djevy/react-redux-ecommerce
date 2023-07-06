@@ -9,6 +9,7 @@ export interface CartProductType {
   image: string[];
   details: string;
   price: number;
+  dealPrice: number;
   sizes?: string[];
   size?: string;
   quantity: number;
@@ -16,10 +17,12 @@ export interface CartProductType {
 interface CartProductsState {
   products: CartProductType[];
   total: number;
+  dealTotal: number;
 }
 const initialState: CartProductsState = {
   products: [],
   total: 0,
+  dealTotal: 0,
 };
 const loadState = (): CartProductsState => {
   try {
@@ -57,6 +60,7 @@ export const cartProductsSlice = createSlice({
         product.quantity = action.payload.quantity;
       }
       state.total = calculateCartTotal(state.products);
+      state.dealTotal = calculateCartDealTotal(state.products);
       saveState(state);
     },
     removeCartProduct: (state, action) => {
@@ -64,6 +68,7 @@ export const cartProductsSlice = createSlice({
         (product) => product.name !== action.payload.name
       );
       state.total = calculateCartTotal(state.products);
+      state.dealTotal = calculateCartDealTotal(state.products);
       saveState(state);
     },
     increaseCartProductQuantity: (state, action) => {
@@ -73,6 +78,7 @@ export const cartProductsSlice = createSlice({
       if (product) {
         product.quantity++;
         state.total = calculateCartTotal(state.products);
+        state.dealTotal = calculateCartDealTotal(state.products);
         saveState(state);
       }
     },
@@ -83,13 +89,26 @@ export const cartProductsSlice = createSlice({
       if (product && product.quantity > 1) {
         product.quantity--;
         state.total = calculateCartTotal(state.products);
+        state.dealTotal = calculateCartDealTotal(state.products);
         saveState(state);
       }
     },
   },
 });
 const calculateCartTotal = (products: CartProductType[]) => {
-  return products.reduce((total, product) => total + product.price * product.quantity, 0);
+  return products.reduce(
+    (total, product) => total + product.price * product.quantity,
+    0
+  );
+};
+const calculateCartDealTotal = (products: CartProductType[]) => {
+  return products.reduce(
+    (total, product) =>
+      product.dealPrice
+        ? total + product.dealPrice * product.quantity
+        : total + product.price * product.quantity,
+    0
+  );
 };
 
 export const {
@@ -103,8 +122,10 @@ export const selectCartProducts = (state: {
   cartProducts: CartProductsState;
 }) => state.cartProducts.products;
 
-export const selectCartTotal = (state: {
+export const selectCartTotal = (state: { cartProducts: CartProductsState }) =>
+  state.cartProducts.total;
+export const selectCartDealTotal = (state: {
   cartProducts: CartProductsState;
-}) => state.cartProducts.total;
+}) => state.cartProducts.dealTotal;
 
 export default cartProductsSlice.reducer;
